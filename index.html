@@ -265,36 +265,39 @@
                         and what you want most."</p>
                 </div>
             </div>
-            <form class="contact-form fade-in right">
+            <form class="contact-form fade-in right" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                 <div class="input-group">
                     <label for="name" data-translate="form_name">Full Name</label>
-                    <input type="text" id="name" required data-translate-ph="form_name_ph" placeholder="E.g., Karim">
+                    <input type="text" id="name" name="name" required data-translate-ph="form_name_ph" placeholder="E.g., Karim">
                 </div>
                 <div class="input-group">
                     <label for="age" data-translate="form_age">Age</label>
-                    <input type="number" id="age" required min="14" max="80" data-translate-ph="form_age_ph"
+                    <input type="number" id="age" name="age" required min="14" max="80" data-translate-ph="form_age_ph"
                         placeholder="E.g., 20">
                 </div>
                 <div class="input-group">
                     <label for="phone" data-translate="form_phone">Phone Number</label>
                     <div class="phone-input-wrapper">
-                        <select id="phone-prefix" class="phone-prefix">
+                        <select id="phone-prefix" name="phone-prefix" class="phone-prefix">
                             <option value="+213">🇩🇿 +213</option>
                             <option value="0">0</option>
                         </select>
-                        <input type="tel" id="phone" required data-translate-ph="form_phone_ph"
+                        <input type="tel" id="phone" name="phone" required data-translate-ph="form_phone_ph"
                             placeholder="E.g., 555 123 456" maxlength="9">
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="goal" data-translate="form_goal">Your Goal / Struggles</label>
-                    <textarea id="goal" rows="4" required data-translate-ph="form_goal_ph"
+                    <textarea id="goal" name="goal" rows="4" required data-translate-ph="form_goal_ph"
                         placeholder="Tell me what you struggle with and what you want to achieve..."></textarea>
                 </div>
+                <!-- Hidden Honeypot for Spam -->
+                <input type="text" name="_gotcha" style="display:none">
                 <button type="submit" class="btn btn-primary full-width submit-btn">
                     <span data-translate="form_btn" class="btn-text">Start Your Transformation</span> <i
                         data-lucide="arrow-right" class="dir-icon"></i>
                 </button>
+                <div id="form-status" class="form-status"></div>
             </form>
         </div>
     </section>

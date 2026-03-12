@@ -344,6 +344,68 @@ function initNavbarScroll() {
     });
 }
 
+// Form Handling (Formspree AJAX)
+function initFormHandling() {
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("form-status");
+    const submitBtn = form.querySelector(".submit-btn");
+    const btnText = submitBtn.querySelector(".btn-text");
+
+    if (!form) return;
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        const originalBtnText = btnText.textContent;
+        btnText.textContent = "Sending...";
+
+        const data = new FormData(event.target);
+        
+        try {
+            const response = await fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                status.innerHTML = "Thanks! Your message has been sent securely.";
+                status.className = "form-status success";
+                form.reset();
+            } else {
+                const result = await response.json();
+                if (Object.hasOwn(result, 'errors')) {
+                    status.innerHTML = result["errors"].map(error => error["message"]).join(", ");
+                } else {
+                    status.innerHTML = "Oops! There was a problem submitting your form.";
+                }
+                status.className = "form-status error";
+            }
+        } catch (error) {
+            status.innerHTML = "Oops! There was a problem submitting your form.";
+            status.className = "form-status error";
+        } finally {
+            submitBtn.disabled = false;
+            btnText.textContent = originalBtnText;
+            
+            // Auto hide status after 5 seconds if success
+            if (status.classList.contains("success")) {
+                setTimeout(() => {
+                    status.style.opacity = "0";
+                    setTimeout(() => {
+                        status.innerHTML = "";
+                        status.style.opacity = "1";
+                    }, 500);
+                }, 5000);
+            }
+        }
+    });
+}
+
 // Load Content on Page Start
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Initialize Animations
@@ -355,7 +417,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. Initialize Navbar Scroll Behavior
     initNavbarScroll();
 
-    // 4. Initialize Language
+    // 4. Initialize Form Handling
+    initFormHandling();
+
+    // 5. Initialize Language
     const savedLang = localStorage.getItem("language") || "en";
     applyTranslations(savedLang);
 

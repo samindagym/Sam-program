@@ -984,6 +984,30 @@ html[dir="rtl"] .phone-prefix {
     margin-top: 1rem;
 }
 
+.form-status {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: opacity 0.3s ease;
+    display: none;
+}
+
+.form-status.success {
+    display: block;
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.form-status.error {
+    display: block;
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
 /* Footer */
 .footer {
     padding: 4rem 0;
